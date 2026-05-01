@@ -126,18 +126,18 @@ st.pyplot(plt.gcf())
 plt.savefig('feature_importance.png')
 print("Saved feature importance plot to 'feature_importance.png'")
 
-# --- 5. Scenario Forecasting (2025) ---
-future_dates = [datetime(2025, 1, 1) + relativedelta(months=i) for i in range(12)]
+# --- 5. Scenario Forecasting (2025-2026) ---
+future_dates = [datetime(2025, 1, 1) + relativedelta(months=i) for i in range(24)]
 last_oil_price = df['Brent_Crude'].iloc[-1]
 
 def generate_forecast(share_adjustment):
     future_gac_units = []
     current_df = df.copy()
     
-    # Base projected Chinese share for 2025 (e.g. continues to grow from 15% to 17%, plus adjustment)
-    base_future_share = np.linspace(0.15, 0.17, 12) + share_adjustment
+    # Base projected Chinese share for 2025-2026 (e.g. continues to grow from 15% to 19%, plus adjustment)
+    base_future_share = np.linspace(0.15, 0.19, 24) + share_adjustment
     
-    for i in range(12):
+    for i in range(24):
         lag_1 = current_df['GAC_Units'].iloc[-1]
         lag_3 = current_df['GAC_Units'].iloc[-3]
         lag_6 = current_df['GAC_Units'].iloc[-6]
@@ -175,12 +175,12 @@ plt.plot(future_dates, forecast_base, label='Base Forecast', color='blue', lines
 plt.plot(future_dates, forecast_high, label='High Growth (+5% Chinese Share)', color='green', linestyle='--')
 plt.plot(future_dates, forecast_low, label='Conservative (-5% Chinese Share)', color='red', linestyle='--')
 
-plt.title('GAC Motor Monthly Demand Forecast (2025 Scenarios)')
+plt.title('GAC Motor Monthly Demand Forecast (2025-2026 Scenarios)')
 plt.xlabel('Date')
 plt.ylabel('Estimated GAC Units')
 plt.legend()
 plt.grid(True)
-st.subheader("2025 Scenario Forecasts")
+st.subheader("2025-2026 Scenario Forecasts")
 st.pyplot(plt.gcf())
 plt.savefig('forecast_scenarios.png')
 print("Saved forecast plot to 'forecast_scenarios.png'")
