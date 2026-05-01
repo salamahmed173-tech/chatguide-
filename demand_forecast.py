@@ -1,3 +1,4 @@
+import streamlit as st
 import pandas as pd
 import numpy as np
 import xgboost as xgb
@@ -9,6 +10,9 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 # --- 1. Data Construction (Strict Traceability) ---
+st.title("GAC Motor Demand Forecasting - GCC Region")
+st.write("This dashboard forecasts GAC Motor demand in the GCC using a highly traceable, macro-anchored methodology.")
+
 # Anchor Points: GASTAT Annual New Vehicle Registrations (Saudi Arabia)
 gastat_anchors = {
     2022: 695700,
@@ -73,6 +77,8 @@ df = pd.DataFrame({
 })
 
 df.to_csv('gac_traceable_dataset.csv', index=False)
+st.subheader("Generated Traceable Dataset")
+st.dataframe(df)
 print("Saved traceable dataset to 'gac_traceable_dataset.csv'")
 
 # --- 2. Feature Engineering ---
@@ -115,6 +121,8 @@ plt.barh(features, importance, color='skyblue')
 plt.xlabel('Importance')
 plt.title('XGBoost Feature Importance')
 plt.tight_layout()
+st.subheader("Model Feature Importance")
+st.pyplot(plt.gcf())
 plt.savefig('feature_importance.png')
 print("Saved feature importance plot to 'feature_importance.png'")
 
@@ -172,6 +180,8 @@ plt.xlabel('Date')
 plt.ylabel('Estimated GAC Units')
 plt.legend()
 plt.grid(True)
+st.subheader("2025 Scenario Forecasts")
+st.pyplot(plt.gcf())
 plt.savefig('forecast_scenarios.png')
 print("Saved forecast plot to 'forecast_scenarios.png'")
 
@@ -194,3 +204,7 @@ with open('assumptions.txt', 'w') as f:
     f.write("   - High Growth: Base + 5%.\n")
     f.write("   - Conservative: Base - 5%.\n")
 print("Saved assumptions to 'assumptions.txt'")
+
+st.subheader("Methodology & Assumptions")
+with open('assumptions.txt', 'r') as f:
+    st.text(f.read())
