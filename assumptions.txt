@@ -1,0 +1,22 @@
+=== GCC Automotive Demand Forecasting Assumptions ===
+
+1. PRIMARY ANCHOR (OBSERVED):
+   - Saudi Arabia Annual New Vehicle Registrations (GASTAT):
+     2022: 695,700 | 2023: 878,100 | 2024: 1,025,700
+
+2. TRANSPARENT GAP FILLING (ESTIMATED):
+   - Since no public quarterly GASTAT data exists, intra-year distributions
+     were derived using base GCC seasonality and modulated by real Brent Crude prices.
+   - These are explicitly flagged as 'Estimated_Split' in the dataset.
+
+3. CHINESE OEM GROWTH BENCHMARK:
+   - Anchored from ~8% (2022) to 15% (2024) based on CAAM/AlixPartners.
+   - Interstitial months are interpolated and flagged 'Estimated_Interpolation'.
+
+4. SECONDARY MACRO VARIABLE:
+   - Historical Brent Crude Oil monthly prices fetched via yfinance.
+
+5. SCENARIO FORECASTING:
+   - Base Case: Chinese share continues slight growth from 15% to 17%.
+   - High Growth: Base + 5%.
+   - Conservative: Base - 5%.
